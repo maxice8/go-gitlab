@@ -59,7 +59,7 @@ func TestDeploymentEventUnmarshal(t *testing.T) {
 	}
 
 	if event.User.Name == "" {
-		t.Errorf("Username is %s, want %s", event.User.Name, "Administrator")
+		t.Errorf("User.Name is %s, want %s", event.User.Name, "Administrator")
 	}
 
 	if event.CommitTitle != "Add new file" {
@@ -86,15 +86,15 @@ func TestIssueCommentEventUnmarshal(t *testing.T) {
 	}
 
 	if event.ObjectAttributes.NoteableType != "Issue" {
-		t.Errorf("NoteableType is %v, want %v", event.ObjectAttributes.NoteableType, "Issue")
+		t.Errorf("ObjectAttributes.NoteableType is %v, want %v", event.ObjectAttributes.NoteableType, "Issue")
 	}
 
 	if event.Issue.Title != "test_issue" {
-		t.Errorf("Issue title is %v, want %v", event.Issue.Title, "test_issue")
+		t.Errorf("Issue.Title is %v, want %v", event.Issue.Title, "test_issue")
 	}
 
 	if len(event.Issue.Labels) == 0 || event.Issue.Labels[0].ID != 25 {
-		t.Errorf("Label id is null")
+		t.Errorf("Issue.Label id is null")
 	}
 }
 
@@ -144,23 +144,23 @@ func TestMergeEventUnmarshal(t *testing.T) {
 		t.Errorf("ObjectAttributes.LastCommit.ID is %v, want %s", event.ObjectAttributes.LastCommit.ID, "da1560886d4f094c3e6c9ef40349f7d38b5d27d7")
 	}
 	if event.ObjectAttributes.Assignee.Name != "User1" {
-		t.Errorf("Assignee.Name is %v, want %v", event.ObjectAttributes.Assignee.Name, "User1")
+		t.Errorf("ObjectAttributes.Assignee.Name is %v, want %v", event.ObjectAttributes.Assignee.Name, "User1")
 	}
 
 	if event.ObjectAttributes.Assignee.Username != "user1" {
-		t.Errorf("ObjectAttributes is %v, want %v", event.ObjectAttributes.Assignee.Username, "user1")
+		t.Errorf("ObjectAttributes.Assignee.Username is %v, want %v", event.ObjectAttributes.Assignee.Username, "user1")
 	}
 
 	if event.User.Name != "Administrator" {
-		t.Errorf("Username is %s, want %s", event.User.Name, "Administrator")
+		t.Errorf("User.Name is %s, want %s", event.User.Name, "Administrator")
 	}
 
 	if event.ObjectAttributes.LastCommit.Timestamp == nil {
-		t.Errorf("Timestamp isn't nil")
+		t.Errorf("ObjectAttributes.LastCommit.Timestamp isn't nil")
 	}
 
 	if name := event.ObjectAttributes.LastCommit.Author.Name; name != "GitLab dev user" {
-		t.Errorf("Commit Username is %s, want %s", name, "GitLab dev user")
+		t.Errorf("ObjectAttributes.LastCommit.Author.Name is %s, want %s", name, "GitLab dev user")
 	}
 }
 
@@ -211,15 +211,15 @@ func TestMergeEventUnmarshalFromGroup(t *testing.T) {
 	}
 
 	if event.User.Name == "" {
-		t.Errorf("Username is %s, want %s", event.User.Name, "Administrator")
+		t.Errorf("User.Name is %s, want %s", event.User.Name, "Administrator")
 	}
 
 	if event.ObjectAttributes.LastCommit.Timestamp == nil {
-		t.Errorf("Timestamp isn't nil")
+		t.Errorf("ObjectAttributes.LastCommit.Timestamp isn't nil")
 	}
 
 	if name := event.ObjectAttributes.LastCommit.Author.Name; name != "Test User" {
-		t.Errorf("Commit Username is %s, want %s", name, "Test User")
+		t.Errorf("ObjectAttributes.LastCommit.Author.Name is %s, want %s", name, "Test User")
 	}
 }
 
@@ -238,19 +238,19 @@ func TestPipelineEventUnmarshal(t *testing.T) {
 	}
 
 	if event.ObjectAttributes.ID != 31 {
-		t.Errorf("ObjectAttributes is %v, want %v", event.ObjectAttributes.ID, 1977)
+		t.Errorf("ObjectAttributes.ID is %v, want %v", event.ObjectAttributes.ID, 1977)
 	}
 
 	if event.User.Name == "" {
-		t.Errorf("Username is %s, want %s", event.User.Name, "Administrator")
+		t.Errorf("User.Name is %s, want %s", event.User.Name, "Administrator")
 	}
 
 	if event.Commit.Timestamp == nil {
-		t.Errorf("Timestamp isn't nil")
+		t.Errorf("Commit.Timestamp isn't nil")
 	}
 
 	if name := event.Commit.Author.Name; name != "User" {
-		t.Errorf("Commit Username is %s, want %s", name, "User")
+		t.Errorf("Commit.Author.Name is %s, want %s", name, "User")
 	}
 }
 
@@ -272,15 +272,15 @@ func TestPushEventUnmarshal(t *testing.T) {
 	}
 
 	if event.UserName != exampleEventUserName {
-		t.Errorf("Username is %s, want %s", event.UserName, exampleEventUserName)
+		t.Errorf("UserName is %s, want %s", event.UserName, exampleEventUserName)
 	}
 
 	if event.Commits[0] == nil || event.Commits[0].Timestamp == nil {
-		t.Errorf("Commit Timestamp isn't nil")
+		t.Errorf("Commit[0].Timestamp isn't nil")
 	}
 
 	if event.Commits[0] == nil || event.Commits[0].Author.Name != "Jordi Mallach" {
-		t.Errorf("Commit Username is %s, want %s", event.UserName, "Jordi Mallach")
+		t.Errorf("Commit[].Author.Name is %s, want %s", event.UserName, "Jordi Mallach")
 	}
 }
 
@@ -303,26 +303,26 @@ func TestReleaseEventUnmarshal(t *testing.T) {
 	}
 
 	if event.Commit.Title != "Merge branch 'example-branch' into 'master'" {
-		t.Errorf("Commit title is %s, want %s", event.Commit.Title, "Merge branch 'example-branch' into 'master'")
+		t.Errorf("Commit.Title is %s, want %s", event.Commit.Title, "Merge branch 'example-branch' into 'master'")
 	}
 
 	if len(event.Assets.Sources) != 4 {
-		t.Errorf("Asset sources length is %d, want %d", len(event.Assets.Sources), 4)
+		t.Errorf("Assets.Sources length is %d, want %d", len(event.Assets.Sources), 4)
 	}
 
 	if event.Assets.Sources[0].Format != "zip" {
-		t.Errorf("First asset source format is %s, want %s", event.Assets.Sources[0].Format, "zip")
+		t.Errorf("Assets.Sources[0].Format is %s, want %s", event.Assets.Sources[0].Format, "zip")
 	}
 
 	if len(event.Assets.Links) != 1 {
-		t.Errorf("Asset links length is %d, want %d", len(event.Assets.Links), 1)
+		t.Errorf("Assets.Links length is %d, want %d", len(event.Assets.Links), 1)
 	}
 
 	if event.Assets.Links[0].Name != "Changelog" {
-		t.Errorf("First asset link name is %s, want %s", event.Assets.Links[0].Name, "Changelog")
+		t.Errorf("Assets.Links[0].Name is %s, want %s", event.Assets.Links[0].Name, "Changelog")
 	}
 
 	if event.Commit.Author.Name != "User" {
-		t.Errorf("Commit author name is %s, want %s", event.Commit.Author.Name, "User")
+		t.Errorf("Commit.Author.Name is %s, want %s", event.Commit.Author.Name, "User")
 	}
 }
